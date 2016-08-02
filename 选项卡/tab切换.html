@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>H5</title>
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+        }
+        ul, li {
+            list-style: none;
+        }
+
+        .clearfix {
+            zoom:1;
+        }
+        .clearfix:after {
+            content: "\0020";
+            display: block;
+            height: 0;
+            clear: both;
+        }
+        #box {
+            position: relative;
+            margin: 50px auto;
+            width: 267px;
+            height: 400px;
+            background: #15191F url(http://cdn.attach.w3cfuns.com/notes/pics/201606/18/092731uldorlsl3a6tddqr.gif) no-repeat center center;
+        }
+        #box .bg {
+            position: absolute;
+            bottom: 0;
+            height: 30px;
+            width:100%;
+            background: #000;
+            opacity: .6;
+            filter:alpha(opacity=60);
+
+
+        }
+        #box span {
+            position: absolute;
+            bottom: 0;
+            height: 30px;
+            line-height: 30px;
+            padding-left: 10px;
+            color: #fff;
+
+        }
+        #box ul {
+            position: absolute;
+            top: 0;
+            right: -34px;
+            width: 30px;
+
+        }
+        #box ul li {
+            width: 30px;
+            height: 30px;
+            margin-bottom: 4px;
+            background: #6C6A6A;
+            line-height: 30px;
+            text-align: center;
+
+
+        }
+        #box .active {
+            background: #FAD410;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <img id="img" src="">
+    <div class="bg"></div>
+    <span></span>
+    <ul id="ul">
+
+    </ul>
+</div>
+<script>
+    window.onload = function () {
+        var aImg = ["http://cdn.attach.w3cfuns.com/notes/pics/201606/18/093542lpeoeeome0nbrozm.jpg","http://cdn.attach.w3cfuns.com/notes/pics/201606/18/092731amu2hmmh2umyy44s.jpg","http://cdn.attach.w3cfuns.com/notes/pics/201606/18/092731ena979nhso8ghva7.jpg","http://cdn.attach.w3cfuns.com/notes/pics/201606/18/092730h6u8j8br0a8rd6l6.jpg","http://cdn.attach.w3cfuns.com/notes/pics/201606/18/092731bl2xgmcexcollj7w.jpg","http://cdn.attach.w3cfuns.com/notes/pics/201606/18/092731keiyrqueuhnospcg.jpg"];
+        var aText = ["图片1","图片2","图片3","图片4","图片5","图片6"];
+        var img = document.getElementById('img');
+        var ul = document.getElementById('ul');
+        var aLi = ul.getElementsByTagName('li');
+        var span = document.getElementsByTagName('span')[0];
+        tab(aImg,aText,img,ul,aLi,span);
+    }
+    function tab(src,summary,img,ul,aLi,summaryBox) {
+        var num=0;
+        for (var i = 0; i < src.length; i++) {
+            ul.innerHTML+="<li>"+(i+1)+"</li>"; // 添加li,并加数字内容
+        };
+        function change(){
+            img.src=src[num];
+            summaryBox.innerHTML=summary[num];
+            for (var i = 0; i < aLi.length; i++) {
+                aLi[i].className=""; // 清空所有
+            };
+            aLi[num].className="active";
+        }
+        change(); //初始化
+
+        for (var i = 0; i < aLi.length; i++) {
+            aLi[i].index=i; // 自定义属性index，起到索引作用
+            aLi[i].onclick = function() {
+                num = this.index;
+                change();
+            }
+        };
+    }
+</script>
+</body>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+
+        }
+        ul li{
+            list-style: none;
+        }
+        #jSwitch{
+            width: 500px;
+            height: 400px;
+            margin: 100px auto;
+            overflow: hidden;
+        }
+        .tab-btn li{
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            border: 1px solid #00CCFF;
+        }
+        .tab-container div{
+            width: 400px;
+            height: 300px;
+            border: 3px solid #002a80;
+
+        }
+        .z-on{
+            background: #FFFF00;
+        }
+
+    </style>
+</head>
+<body>
+<div class="m-tab" id="jSwitch">
+    <ul class="tab-btn">
+        <li class="z-on">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+    <div class="tab-container">
+        <div>asdasdaa</div>
+        <div>32dsdad3</div>
+        <div>23sdsdas23</div>
+        <div>2qwdasdasewq23</div>
+        <div>23wedasdasdasdasqwe23</div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../../js/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+
+
+
+
+
+
+    $.fn.tab = function(options) {
+        var _self = this,
+                timer;
+        var defaults = {
+            tabBtns: ".tab-btn",  //按钮选择器
+            tabContainers: ".tab-container",  //内容选择器
+            selClass: "z-on",  //按钮选中状态
+            isSwitch: false,   //是否自动切换
+            timeTick: 1000,
+            events: "click" //触发事件
+        }
+        defaults = $.extend(defaults, options);
+
+        var tabBtns = $(_self).find(defaults.tabBtns).children();
+        var tabContainers = $(_self).find(defaults.tabContainers).children();
+
+        //绑定事件
+        tabBtns.bind(defaults.events, function() {
+            var index = $(this).index();
+            $(this).addClass(defaults.selClass).siblings().removeClass(defaults.selClass);
+            tabContainers.eq(index).show().siblings().hide();
+        });
+        tabBtns.eq(0).trigger(defaults.events);
+
+        //自动切换
+        if (defaults.isSwitch) {
+            var count = -1,
+                    len = tabBtns.length;
+
+            function autoSwitch() {
+                count >= len - 1 ? (count = 0) : (count++);
+                tabBtns.eq(count).trigger(defaults.events);
+                timer = setTimeout(autoSwitch, defaults.timeTick);
+            }
+            autoSwitch();
+
+            tabBtns.hover(function() {
+                timer && clearTimeout(timer);
+                count = $(this).index();
+            }, function() {
+                timer = setTimeout(autoSwitch, defaults.timeTick);
+            });
+        }
+    }
+
+
+
+    $("#jSwitch").tab({
+        tabBtns: ".tab-btn",   //切换按钮
+        tabContainers: ".tab-container",  //切换的内容
+        selClass: "z-on", //切换按钮选中的样式
+//        isSwitch: true,  //是否自动切换
+//        timeTick: 3000,
+        events: "mouseover"  //触发事件
+    });
+
+</script>

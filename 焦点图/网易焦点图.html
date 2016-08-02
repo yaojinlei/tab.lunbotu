@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>网易焦点图</title>
+    <meta name="viewport" content="width=1000">
+    <style type="text/css">
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+        .play_main {
+            width: 510px;
+            margin: 20px auto;
+            font-size: 12px;
+            overflow: hidden;
+            zoom: 1;
+            position: relative;
+        }
+        .play_main .bd {
+
+            height: 320px;
+            overflow: hidden;
+            zoom: 1;
+            position: relative;
+        }
+        .play_main .bd li {
+            position: relative;
+            zoom: 1;
+            display: none;
+            height: 100%;
+
+            z-index: 1
+        }
+
+        .play_main .bd li img {
+
+            height:100%;
+        }
+
+        .play_main .bd li p {
+            position: absolute;
+            bottom: 0;
+            height: 30px;
+            line-height: 30px;
+            background: rgba(0%,0%,0%,0.6);
+            background: #000\9;
+            color: #fff;
+            width: 100%;
+            font-weight: bold;
+            left: 0;
+            text-indent:2em
+        }
+        .play_main .current, .play_main .current_left {
+            display: block !important;
+            position: absolute !important;
+            top: 0;
+        }
+
+        /*
+        .play_main .current_left {
+            left: 310px;
+        }
+        */
+        .play_main .hd li {
+            background: url(http://sandbox.runjs.cn/uploads/rs/4/pfpcon3m/icon_v9.png) no-repeat;
+            width: 24px;
+            height: 20px;
+            margin: 5px 3px;
+            background-position: -23px -783px;
+            cursor: pointer;
+        }
+        @keyframes hd_li {
+            from {
+                background-position:-24px -763px;
+            }
+            to {
+                background-position: 0 -763px;
+            }
+        }
+        @-webkit-keyframes hd_li {
+            from {
+                background-position:-24px -763px;
+            }
+            to {
+                background-position: 0 -763px;
+            }
+        }
+        @-moz-keyframes hd_li {
+            from {
+                background-position:-24px -763px;
+            }
+            to {
+                background-position: 0 -763px;
+            }
+        }
+        @-ms-keyframes hd_li {
+            from {
+                background-position:-24px -763px;
+            }
+            to {
+                background-position: 0 -763px;
+            }
+        }
+        @-o-keyframes hd_li {
+            from {
+                background-position:-24px -763px;
+            }
+            to {
+                background-position: 0 -763px;
+            }
+        }
+        .play_main .hd li.on {
+            background-position: -24px -763px;
+        }
+        .play_main .hd li.on_m {
+            animation: hd_li 3s linear;
+            -webkit-animation: hd_li 3s linear;
+            -moz-animation: hd_li 3s linear;
+            -ms-animation: hd_li 3s linear;
+            -o-animation: hd_li 3s linear;
+        }
+        .play_main .prev, .play_main .next {
+            background: url(http://sandbox.runjs.cn/uploads/rs/4/pfpcon3m/icon_v9.png) no-repeat;
+            width: 30px;
+            height: 35px;
+            position: absolute;
+
+            display: block;
+            z-index: 5;
+            cursor: pointer;
+        }
+        .play_main .prev {
+            background-position: 0 0;
+            left: 5px
+        }
+        .play_main .next {
+            background-position: 0 -45px;
+            right: 5px
+        }
+
+
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+        .pm_2 {
+            width: 310px;
+            margin: 20px auto;
+            font-size: 12px;
+            overflow: hidden;
+            zoom: 1;
+            position: relative;
+        }
+        .pm_2 .bd {
+
+            height: 220px;
+            overflow: hidden;
+            zoom: 1;
+            position: relative;
+        }
+        .pm_2 .bd li {
+            position: relative;
+            zoom: 1;
+            display: none;
+            height: 100%;
+
+            z-index: 1
+        }
+
+        .pm_2 .bd li img {
+
+            height:100%;
+        }
+
+        .pm_2 .bd li p {
+            position: absolute;
+            bottom: 0;
+            height: 30px;
+            line-height: 30px;
+            background: rgba(0%,0%,0%,0.6);
+            background: #000\9;
+            color: #fff;
+            width: 100%;
+            font-weight: bold;
+            left: 0;
+            text-indent:2em
+        }
+        .pm_2 .current, .pm_2 .current_left {
+            display: block !important;
+            position: absolute !important;
+            top: 0;
+        }
+
+        /*
+        .pm_2 .current_left {
+            left: 310px;
+        }
+        */
+        .pm_2 .hd li {
+            background: url(http://sandbox.runjs.cn/uploads/rs/4/pfpcon3m/icon_v9.png) no-repeat;
+            width: 24px;
+            height: 20px;
+            margin: 5px 3px;
+            background-position: -23px -783px;
+            cursor: pointer;
+        }
+        @keyframes hd_li {
+            from {
+                background-position:-24px -763px;
+            }
+            to {
+                background-position: 0 -763px;
+            }
+        }
+        @-webkit-keyframes hd_li {
+            from {
+                background-position:-24px -763px;
+            }
+            to {
+                background-position: 0 -763px;
+            }
+        }
+        @-moz-keyframes hd_li {
+            from {
+                background-position:-24px -763px;
+            }
+            to {
+                background-position: 0 -763px;
+            }
+        }
+        @-ms-keyframes hd_li {
+            from {
+                background-position:-24px -763px;
+            }
+            to {
+                background-position: 0 -763px;
+            }
+        }
+        @-o-keyframes hd_li {
+            from {
+                background-position:-24px -763px;
+            }
+            to {
+                background-position: 0 -763px;
+            }
+        }
+        .pm_2 .hd li.on {
+            background-position: -24px -763px;
+        }
+        .pm_2 .hd li.on_m {
+            animation: hd_li 3s linear;
+            -webkit-animation: hd_li 3s linear;
+            -moz-animation: hd_li 3s linear;
+            -ms-animation: hd_li 3s linear;
+            -o-animation: hd_li 3s linear;
+        }
+        .pm_2 .prev, .next {
+            background: url(http://sandbox.runjs.cn/uploads/rs/4/pfpcon3m/icon_v9.png) no-repeat;
+            width: 30px;
+            height: 35px;
+            position: absolute;
+
+            display: block;
+            z-index: 5;
+            cursor: pointer;
+        }
+        .pm_2 .prev {
+            background-position: 0 0;
+            left: 5px
+        }
+        .pm_2 .next {
+            background-position: 0 -45px;
+            right: 5px
+        }
+    </style>
+    <link rel="stylesheet"  href="http://img.cjn.cn/2013cjn/pub/css/quanju.css" type="text/css" media="all">
+    <!--[if lt IE 9]>
+    <script src="http://img.cjn.cn/2013cjn/pub/js/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="http://img.cjn.cn/2013cjn/pub/js/jquery.min.js"></script>
+    <script src="http://img.cjn.cn/2013cjn/pc/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
+    <script src="http://sandbox.runjs.cn/uploads/rs/4/pfpcon3m/1.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+<article class="play_main">
+    <ul class="bd">
+        <li><a><img src="http://img6.cache.netease.com/cnews/2014/8/5/2014080509422259b94.jpg" alt="《看客》：“别人家”的游戏展" width="310" height="220">
+            <p class="pos-abs">《看客》：“别人家”的游戏展</p>
+        </a></li>
+        <li><a><img src="http://img2.cache.netease.com/auto/2014/8/6/201408060807211c815.jpg" alt="女硕士开跑车闯红灯 掏学生证求半价罚分" width="310" height="220"><p class="pos-abs">女硕士开跑车闯红灯 掏学生证求半价罚分</p></a></li>
+        <li><a><img src="http://img2.cache.netease.com/ent/2014/8/5/2014080509423558871.jpg" alt="网曝Showgirl游艇门照 场面堪比海天盛宴" width="310" height="220">
+            <p class="pos-abs">网曝Showgirl游艇门照 场面堪比海天盛宴</p>
+        </a> </li>
+        <li><a><img src="http://img4.cache.netease.com/sports/2014/8/5/20140805072217c18c4.jpg" alt="视界:麻将遭"国粹之殇" 竞技麻将四川最差" width="310" height="220">
+            <p class="pos-abs">视界:麻将遭"国粹之殇" 竞技麻将四川最差</p>
+        </a></li>
+        <li><a><img src="http://img1.cache.netease.com/auto/2014/8/5/20140805092703c8160.jpg" alt="丰田在国内推厚道车:10万元买家用"轿跑"" width="310" height="220">
+            <p class="pos-abs">丰田在国内推厚道车:10万元买家用"轿跑"</p>
+        </a></li>
+        <li><a><img src="http://img3.cache.netease.com/house/2014/8/4/201408042253364d39f.jpg" alt="7月房价下跌最惨的十个城市" width="310" height="220">
+            <p class="pos-abs">7月房价下跌最惨的十个城市</p>
+        </a></li>
+    </ul>
+    <ul class="hd list-cn">
+    </ul>
+    <span class="prev"></span> <span class="next"></span>
+</article>
+<article class="pm_2">
+    <ul class="bd">
+        <li><a><img src="http://img6.cache.netease.com/cnews/2014/8/5/2014080509422259b94.jpg" alt="《看客》：“别人家”的游戏展" >
+            <p class="pos-abs">《看客》：“别人家”的游戏展</p>
+        </a></li>
+        <li><a><img src="http://img2.cache.netease.com/auto/2014/8/6/201408060807211c815.jpg" alt="女硕士开跑车闯红灯 掏学生证求半价罚分" ><p class="pos-abs">女硕士开跑车闯红灯 掏学生证求半价罚分</p></a></li>
+        <li><a><img src="http://img2.cache.netease.com/ent/2014/8/5/2014080509423558871.jpg" alt="网曝Showgirl游艇门照 场面堪比海天盛宴" >
+            <p class="pos-abs">网曝Showgirl游艇门照 场面堪比海天盛宴</p>
+        </a> </li>
+        <li><a><img src="http://img4.cache.netease.com/sports/2014/8/5/20140805072217c18c4.jpg" alt="视界:麻将遭"国粹之殇" 竞技麻将四川最差" >
+            <p class="pos-abs">视界:麻将遭"国粹之殇" 竞技麻将四川最差</p>
+        </a></li>
+        <li><a><img src="http://img1.cache.netease.com/auto/2014/8/5/20140805092703c8160.jpg" alt="丰田在国内推厚道车:10万元买家用"轿跑"" >
+            <p class="pos-abs">丰田在国内推厚道车:10万元买家用"轿跑"</p>
+        </a></li>
+        <li><a><img src="http://img3.cache.netease.com/house/2014/8/4/201408042253364d39f.jpg" alt="7月房价下跌最惨的十个城市" >
+            <p class="pos-abs">7月房价下跌最惨的十个城市</p>
+        </a></li>
+    </ul>
+    <ul class="hd list-cn">
+    </ul>
+    <span class="prev"></span> <span class="next"></span>
+</article>
+<article class="pm_2">
+    <ul class="bd">
+        <li><a><img src="http://img6.cache.netease.com/cnews/2014/8/5/2014080509422259b94.jpg" alt="《看客》：“别人家”的游戏展" >
+            <p class="pos-abs">《看客》：“别人家”的游戏展</p>
+        </a></li>
+        <li><a><img src="http://img2.cache.netease.com/auto/2014/8/6/201408060807211c815.jpg" alt="女硕士开跑车闯红灯 掏学生证求半价罚分" ><p class="pos-abs">女硕士开跑车闯红灯 掏学生证求半价罚分</p></a></li>
+        <li><a><img src="http://img2.cache.netease.com/ent/2014/8/5/2014080509423558871.jpg" alt="网曝Showgirl游艇门照 场面堪比海天盛宴" >
+            <p class="pos-abs">网曝Showgirl游艇门照 场面堪比海天盛宴</p>
+        </a> </li>
+        <li><a><img src="http://img4.cache.netease.com/sports/2014/8/5/20140805072217c18c4.jpg" alt="视界:麻将遭"国粹之殇" 竞技麻将四川最差" >
+            <p class="pos-abs">视界:麻将遭"国粹之殇" 竞技麻将四川最差</p>
+        </a></li>
+        <li><a><img src="http://img1.cache.netease.com/auto/2014/8/5/20140805092703c8160.jpg" alt="丰田在国内推厚道车:10万元买家用"轿跑"" >
+            <p class="pos-abs">丰田在国内推厚道车:10万元买家用"轿跑"</p>
+        </a></li>
+        <li><a><img src="http://img3.cache.netease.com/house/2014/8/4/201408042253364d39f.jpg" alt="7月房价下跌最惨的十个城市" >
+            <p class="pos-abs">7月房价下跌最惨的十个城市</p>
+        </a></li>
+    </ul>
+    <ul class="hd list-cn">
+    </ul>
+    <span class="prev"></span> <span class="next"></span>
+</article>
+</body>
+
+</html>
+
+
+<script type="text/javascript">
+    $(function(){
+        $(".play_main").play({p_width:510,p_height:320});
+        $(".pm_2").play({p_width:310,p_height:220});
+
+    })
+</script>

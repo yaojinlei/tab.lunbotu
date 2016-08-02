@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播（面向对象版）</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .carousel-box {
+            position: relative;
+            width: 573px;
+            height: 257px;
+            border: 1px solid #000;
+            margin: 100px auto 0;
+            overflow: hidden;
+        }
+
+        #carousel-main {
+            width: 9999px;
+            height: 100%;
+            position: absolute;
+            left: -573px;
+        }
+
+        #carousel-main li {
+            float: left;
+            width: 573px;
+            height: 257px;
+        }
+
+        #carousel-main :nth-child(1) {
+            background: url(http://cdn.attach.w3cfuns.com/notes/pics/201605/12/131657xt66cprl1z1r2wwk.jpg) no-repeat center / 100% 100%;
+        }
+
+        #carousel-main :nth-child(2) {
+            background: url(http://cdn.attach.w3cfuns.com/notes/pics/201605/12/131656naqg4cssvvts7jdd.jpg) no-repeat center / 100% 100%;
+        }
+
+        #carousel-main :nth-child(3) {
+            background: url(http://cdn.attach.w3cfuns.com/notes/pics/201605/12/131657yxrvv1kbktxceikc.jpg) no-repeat center / 100% 100%;
+        }
+
+        #carousel-main :nth-child(4) {
+            background: url(http://cdn.attach.w3cfuns.com/notes/pics/201605/12/131657z055fxuckg0czwj2.jpg) no-repeat center / 100% 100%;
+        }
+
+        #carousel-main :nth-child(5) {
+            background: url(http://cdn.attach.w3cfuns.com/notes/pics/201605/12/131657xt66cprl1z1r2wwk.jpg) no-repeat center / 100% 100%;
+        }
+
+        #carousel-main :nth-child(6) {
+            background: url(http://cdn.attach.w3cfuns.com/notes/pics/201605/12/131656naqg4cssvvts7jdd.jpg) no-repeat center / 100% 100%;
+        }
+
+        #carousel-index {
+            width: 108px;
+            position: absolute;
+            right: 230px;
+            bottom: 19px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #carousel-index a {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #000;
+        }
+
+        #carousel-index .active {
+            background: red;
+        }
+
+        .left, .right {
+            position: absolute;
+            z-index: 1000;
+            top: 40%;
+            width: 40px;
+            line-height: 50px;
+            background: #000;
+            opacity: .5;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .right {
+            right: 0;
+        }
+
+    </style>
+</head>
+<body>
+<section class="carousel-box">
+    <ul id="carousel-main">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <a href="###" class="left">Left</a>
+    <a href="###" class="right">Right</a>
+    <ul id="carousel-index">
+        <a href="###" class="active"></a>
+        <a href="###"></a>
+        <a href="###"></a>
+        <a href="###"></a>
+    </ul>
+</section>
+<script type="text/javascript">
+    function Carousel(obj, indexA) {
+        this.init(obj, indexA);
+    }
+    Carousel.prototype = {
+        init: function (obj, indexA) {
+            var oThis = this;
+            this.obj = obj;
+            this.num = 4;
+            this.indexA = indexA;
+            this.width = 573;
+            this.index = 0;
+            this.flag = true;
+            this.timer = null;
+            this.left = this.obj.parentNode.querySelector('.left');
+            this.right = this.obj.parentNode.querySelector('.right');
+            this.autoTimer = setInterval(function () {
+                oThis.next();
+            }, 3000);
+            this.obj.parentNode.onmouseover = function () {
+                clearInterval(oThis.autoTimer);
+            };
+            this.obj.parentNode.onmouseout = function () {
+                oThis.autoTimer = setInterval(function () {
+                    oThis.next();
+                }, 3000);
+            };
+            this.left.onclick = function () {
+                oThis.prev();
+            };
+            this.right.onclick = function () {
+                oThis.next();
+            };
+            for (var i = 0; i < this.num; i++) {
+                this.indexA[i].index = i;
+                this.indexA[i].onmouseover = function () {
+                    oThis.index = this.index;
+                    oThis.move(this.index);
+                }
+            }
+        },
+        prev: function () {
+            this.index--;
+            if (this.index === -1) {
+                this.index = this.num;
+                this.obj.style.left = (this.index + 1) * (-this.width) + 'px';
+                this.index--;
+            }
+            this.move(this.index);
+        },
+        next: function () {
+            this.index++;
+            if (this.index === this.num) {
+                this.index = 0;
+                this.obj.style.left = 0;
+            }
+            this.move(this.index);
+        },
+        move: function (index, callBack) {
+            var translate = -(index + 1) * this.width;
+            var oThis = this;
+            clearInterval(oThis.timer);
+            for (var i = 0; i < this.num; i++) {
+                this.indexA[i].className = '';
+            }
+            index === -1 ? index = this.num - 1 : '';
+            this.indexA[index].className = "active";
+            oThis.timer = setInterval(function () {
+                var iSpeed = (translate - oThis.obj.offsetLeft) / oThis.num;
+                iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+                if (iSpeed === 0) {
+                    clearInterval(oThis.timer);
+                    callBack && callBack.call(oThis);
+                } else {
+                    oThis.obj.style.left = oThis.obj.offsetLeft + iSpeed + 'px';
+                }
+            }, 25);
+        }
+    };
+
+    window.onload = function () {
+        var obj = document.getElementById('carousel-main');
+        var indexA = document.getElementById('carousel-index').getElementsByTagName('a');
+        new Carousel(obj, indexA);
+    };
+</script>
+</body>
+</html>

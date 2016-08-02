@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font: 12px/19px Arial, Helvetica, sans-serif;
+            color: #666;
+        }
+
+        .tab {
+            width: 240px;
+            margin: 50px;
+        }
+
+        .tab_menu {
+            clear: both;
+        }
+
+        .tab_menu li {
+            float: left;
+            text-align: center;
+            cursor: pointer;
+            list-style: none;
+            padding: 1px 6px;
+            margin-right: 4px;
+            background: #F1F1F1;
+            border: 1px solid #898989;
+            border-bottom: none;
+        }
+
+        .tab_menu li:hover {
+            background: #DFDFDF;
+        }
+
+        .tab_menu li.selected {
+            color: #FFF;
+            background: #6D84B4;
+        }
+
+        .tab_box {
+            clear: both;
+            border: 1px solid #898989;
+            height: 100px;
+        }
+
+        .hide {
+            display: none
+        }
+    </style>
+</head>
+<body>
+<div class="tab">
+    <div class="tab_menu">
+        <ul>
+            <li class="selected">kai</li>
+            <li>shi</li>
+            <li>san</li>
+        </ul>
+    </div>
+    <div class="tab_box">
+        <div>12</div>
+        <div class="hide">222</div>
+        <div class="hide">3333</div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var $div_li = $('div.tab ul li');
+        $div_li.on('click', function () {
+            $(this).addClass('selected').siblings().removeClass('selected');
+
+            var index = $div_li.index(this);
+            $("div.tab_box > div")   	//选取子节点。不选取子节点的话，会引起错误。如果里面还有div
+                    .eq(index).show()   //显示 <li>元素对应的<div>元素
+                    .siblings().hide(); //隐藏其它几个同辈的<div>元素
+        })
+    })
+    //$(function(){
+    //    var $div_li =$("div.tab_menu ul li");
+    //    $div_li.click(function(){
+    //        $(this).addClass("selected")            //当前<li>元素高亮
+    //                .siblings().removeClass("selected");  //去掉其它同辈<li>元素的高亮
+    //        var index =  $div_li.index(this);  // 获取当前点击的<li>元素 在 全部li元素中的索引。
+    //        $("div.tab_box > div")   	//选取子节点。不选取子节点的话，会引起错误。如果里面还有div
+    //                .eq(index).show()   //显示 <li>元素对应的<div>元素
+    //                .siblings().hide(); //隐藏其它几个同辈的<div>元素
+    //    })
+    //})
+
+
+</script>

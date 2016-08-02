@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>jquery的tab标签页</title>
+
+    <script src="../../js/jquery-1.9.1.js"></script>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul{
+            list-style-type: none;
+        }
+        body{
+            margin: 50px ;
+        }
+        #ul{
+            height: 30px;
+            margin-bottom: 10px;
+        }
+        #ul li{
+            height: 30px;
+            line-height: 30px;
+            padding: 0 15px;
+            border: 1px solid #abcdef;
+            float: left;
+            margin-right: 3px;
+            cursor: pointer;
+        }
+        #ul li.current{
+            background: #abcdef;
+        }
+
+        #content div{
+            width: 300px;
+            height: 200px;
+            border: 1px solid #abcdef;
+            display: none;
+        }
+        #content div.show{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul">
+    <li class="current">php</li>
+    <li>ruby</li>
+    <li>python</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+</ul>
+<div id="content">
+    <div class="show">php。。。。。。介绍</div>
+    <div>ruby。。。。。。介绍</div>
+    <div>python。。。。。。介绍</div>
+    <div>4</div>
+    <div>5</div>
+    <div>32</div>
+    <div>332323</div>
+</div>
+
+<script>
+    $('#ul li').click(function(){
+
+        //1、点击li的时候要切换样式
+        $(this).addClass('current').siblings().removeClass('current');
+        //2、根据li的索引值，来确定哪个div显示，其它div隐藏
+        $('#content>div').eq($(this).index()).show().siblings().hide();
+    });
+
+</script>
+
+</body>
+</html>

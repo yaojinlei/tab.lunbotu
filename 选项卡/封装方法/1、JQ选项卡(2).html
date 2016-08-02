@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>选项卡</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+            -webkit-user-select: none;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        .box {
+            margin: 10px auto;
+            width: 500px;
+        }
+
+        .box ul {
+            position: relative;
+            top: 1px;
+            /*overflow: hidden;*//*清除子元素的浮动对父级元素的影响*/
+        }
+
+        .box ul:after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+
+        .box ul li {
+            float: left;
+            margin-right: 15px;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid green;
+            cursor: pointer;
+
+        }
+
+        .box ul li.select, .select1, .select2 {
+            background: lightblue;
+            border-bottom-color: lightblue;
+        }
+
+        .box div {
+            display: block;
+            height: 150px;
+            line-height: 150px;
+            text-align: center;
+            background: lightblue;
+            border: 1px solid green;
+            /*clear: both;*//*清除哥哥元素的浮动对弟弟元素的影响*/
+        }
+
+        .box div.select, .box .select1, .box .select2 {
+            display: block;
+        }
+
+        .box .wrap {
+            height: 152px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="tabFir">
+    <ul class="ul">
+        <li class="select li">页卡一</li>
+        <li class="li">页卡二</li>
+        <li class="li">页卡三</li>
+    </ul>
+    <div class="wrap">
+        <div class="inner">
+            <div class="select">内容一</div>
+            <div>内容二</div>
+            <div>内容三</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="box" id="tabFir1">
+    <ul>
+        <li class="select1">页卡一</li>
+        <li>页卡二</li>
+        <li>页卡三</li>
+        <li>页卡三</li>
+        <li>页卡三</li>
+        <li>页卡三</li>
+    </ul>
+    <div class="wrap">
+        <div class="inner">
+            <div class="select1">内容一</div>
+            <div>内容二</div>
+            <div>内容三</div>
+            <div>内容三</div>
+            <div>内容三</div>
+            <div>内容三</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="box" id="tabFir2">
+    <ul>
+        <li class="select2">页卡一</li>
+        <li>页卡二</li>
+        <li>页卡三</li>
+        <li>页卡三</li>
+    </ul>
+    <div class="wrap">
+            <div class="select2">内容一</div>
+            <div>内容二</div>
+            <div>内容三</div>
+            <div>内容三</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+
+        function tab(opt) {
+            var tabFir = document.getElementById(opt.index);
+            var o_li = tabFir.getElementsByTagName(opt.index2);
+            var o_div = tabFir.getElementsByTagName(opt.index3);
+
+            function chenTab(n) {
+                for (var i = 0; i < o_li.length; i++) {
+                    o_li[i].className = '';
+                    o_div[i].className = '';
+                }
+                o_li[n].className = opt.clas;
+                o_div[n].className = opt.clas;
+            }
+
+            for (var i = 0; i < o_li.length; i++) {
+                o_li[i].a = i;
+                o_li[i].onclick = function () {
+                    chenTab(this.a)
+                }
+            }
+        }
+        tab({index: '#tabFir2', index2: " ul li", index3: ".wrap div",clas: "select2", clas2: "select2"});
+
+//    $(function () {
+//        function tab(opt) {
+//            var $wrap = $(opt.index);
+//            var $navTab = $wrap.find(opt.index2);
+//            var $content = $wrap.find(opt.index3);
+//            var $content_len = $content.length;
+//            var $inner = $wrap.find(opt.index4);
+//            var $content_h = $content.outerHeight();
+//            var step = 0;
+//            var pre = 0;
+//            var time = setInterval(autoMove, 2000);
+//
+//            function autoMove(index) {
+//                $content = $wrap.find(opt.index3);
+//                $navTab.removeClass(opt.clas);
+//                if (typeof index != "undefined") {
+//                    step = index;
+//                    $navTab.eq(step).addClass(opt.clas);
+//                    //$content.eq(index).animate({"margin-top":-$content_h*index+"px"},1000,function(){
+//                    $content.slice(0, 1).appendTo($inner);
+//                    $content = $wrap.find(opt.index3);
+//                    //$content.slice(0,index).css('margin-top',0);
+//                    //});
+//
+//                } else {
+//                    step++;
+//                    $navTab.eq(step).addClass(opt.clas);
+//                    $content.eq(0).animate({"margin-top": -$content_h + "px"}, 1000, function () {
+//                        $content.eq(0).appendTo($inner);
+//                        $content.eq(0).css('margin-top', 0);
+//                    });
+//                }
+//                pre = index;
+//                if (step == $navTab.length) {
+//                    step = 0;
+//                    $navTab.eq(0).addClass(opt.clas);
+//                }
+//
+//
+//            }
+//
+//            $content.mousemove(function () {
+//                clearInterval(time)
+//            });
+//            $content.mouseout(function () {
+//                time = setInterval(autoMove, 2000)
+//            });
+//
+//
+//            function tab() {
+//                $navTab.each(function (index) {
+//                    $navTab.eq(index).on("click", function () {
+//                        step = index;
+//                        $navTab.removeClass(opt.clas);
+//                        $(this).addClass(opt.clas);
+//                        //clearInterval(time);
+//                        autoMove(index);
+//                    });
+//                });
+//
+//            }
+//
+//            tab()
+//
+//
+//        }
+//
+//        tab({index: '#tabFir', index2: "li", index3: ".inner div", index4: '.inner', clas: "select", clas2: "select"});
+//        tab({index: '#tabFir1', index2: "li", index3: ".inner div",index4: '.inner', clas: "select1", clas2: "select1"});
+//        tab({index: '#tabFir2', index2: "li", index3: ".inner div", index4: '.inner',clas: "select2", clas2: "select2"});
+//    });
+    /*
+     * index:选项卡盒子
+     * index2:选项标签
+     * index3:内容
+     * index4:内容的盒子
+     * clas:标签样式
+     * clas2:内容样式
+     * */
+
+</script>

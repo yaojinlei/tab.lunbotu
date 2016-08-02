@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>图片间歇滚动</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font: 12px/1.5 '微软雅黑';
+        }
+
+        li {
+            list-style: none
+        }
+
+        img {
+            border: 0;
+            vertical-align: bottom;
+        }
+
+        #scrollNews {
+            width: 350px;
+            height: 110px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid black;
+            margin: 140px auto;
+        }
+
+        #newsList {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #newsList li {
+            padding: 5px;
+        }
+
+        #newsList li a {
+            color: #fff;
+            text-decoration: none;
+            width: 340px;
+            height: 100px;
+            display: block;
+        }
+
+        #newsList li a:hover {
+            color: #FA2B8D;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div id="scrollNews">
+    <ul id="newsList">
+        <li style="background:#2A8FBD"><a href="http://www.baidu.com">001parentObj 是一个元素的引用，当前元素的偏移量在其中计算</a></li>
+        <li style="background:#D2A8FB"><a href="http://www.baidu.com">002parentObj 是一个元素的引用，当前元素的偏移量在其中计算</a></li>
+        <li style="background:#BF2A8D"><a href="http://www.baidu.com">003parentObj 是一个元素的引用，当前元素的偏移量在其中计算</a></li>
+        <li style="background:#2ABD8F"><a href="http://www.baidu.com">004parentObj 是一个元素的引用，当前元素的偏移量在其中计算</a></li>
+        <li style="background:#8FBD2A"><a href="http://www.baidu.com">005parentObj 是一个元素的引用，当前元素的偏移量在其中计算</a></li>
+        <li style="background:#2AFBD8"><a href="http://www.baidu.com">006parentObj 是一个元素的引用，当前元素的偏移量在其中计算</a></li>
+    </ul>
+</div>
+<script type="text/javascript">
+    var oSN = document.getElementById('scrollNews'); //得到学要做滚动效果 视觉窗口 的那个div
+    var oNL = document.getElementById('newsList');//得到 需要 滚动的 滚动列表
+    var picH = oNL.getElementsByTagName('li')[0].offsetHeight; //得到 每次滚动的 最小距离
+    var minTime, maxTime, newTop = 0;
+    function minScroll() {//图片滚动
+        newTop++;
+        if (newTop <= picH) {
+            oNL.style.top = '-' + newTop + 'px';//每次滚动 oNL +1 px
+        } else {// oNL滚动超过超过 最小距离时
+            clearInterval(minTime); // 清除定时器 停止滚动
+            oNL.appendChild(getFirst(oNL)) // 将 被卷去到上方的 第一个元素子节点 dom操作到 ul的下面去  //此处可直接 写oNL.appendChild(oNL.children[0])
+            oNL.style.top = 0; //还原oNL的初始top值
+            newTop = 0;// 还原 oNL向上移动的初始值
+            maxTime = setTimeout(maxScroll, 1000);// 隔3秒 重新 调用 列表滚动函数
+        }
+    }
+    function maxScroll() {//图片列表滚动
+        minTime = setInterval(minScroll, 10)
+    }
+    //alert(oNL.offsetHeight-picH)
+    setTimeout(maxScroll, 2000)
+    //封装 获取 元素内的 第一个元素节点
+    function getFirst(obj) {
+        if (!obj || !obj.firstChild) return null;
+        return obj.firstChild.nodeType === 1 ? obj.firstChild : getNext(obj.firstChild);
+    }
+    function getNext(obj) {
+        if (!obj || !obj.nextSibling) return null;
+        return obj.nextSibling.nodeType === 1 ? obj.nextSibling : getNext(obj.nextSibling)
+    }
+</script>
+</body>
+</html>

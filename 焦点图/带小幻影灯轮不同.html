@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    <script type="text/javascript"  src="../../js/jquery-1.9.1.js"></script>
+    <script type="text/javascript">
+
+
+        $(function(){
+            var oBox =$("#box");
+            var oUl = $("#list");
+            var oLi = oUl.find("li");
+            var oDt = oBox.find("dt");
+            var timer = null;
+            var iNow = 0;
+            var speed = 2000;
+            var leftBtn = $("#left");
+            var rightBtn = $("#right");
+
+
+
+            oDt.mouseover(function(){
+                iNow = $(this).index();
+                fnFade();
+            })
+
+            oBox.hover(function(){clearInterval(timer)},function(){autoPlay()})
+
+            autoPlay();
+
+            function autoPlay(){
+                clearInterval(timer);
+                timer = setInterval(function(){
+                    iNow++;
+                    iNow %= oDt.length;
+                    fnFade();
+                },speed);
+            }
+
+
+
+
+
+            function fnFade(){
+                oLi.each(function(i){
+                    if( i == iNow  ){
+                        oLi.eq(i).stop(false,true).slideDown("slow").css("z-index",2);
+                        oDt.eq(i).addClass("active");
+                    }else{
+                        oLi.eq(i).stop(false,true).slideUp("slow").css("z-index",1);
+                        oDt.eq(i).removeClass("active");
+                    }
+                })
+            }
+
+
+            rightBtn.click(function(){
+
+                iNow++;
+                iNow %= oDt.length;
+                oLi.each(function(index){
+                    oLi.eq(index).stop(false,true).fadeOut("slow").css("z-index",1);
+                    oDt.eq(index).removeClass("active");
+                })
+                oLi.eq(iNow).stop(false,true).fadeIn("slow").css("z-index",1);
+                oDt.eq(iNow).addClass("active");
+
+
+            })
+
+            leftBtn.click(function(){
+
+                iNow--;
+                iNow %= oDt.length;
+                oLi.each(function(index){
+                    oLi.eq(index).stop(false,true).fadeOut("slow").css("z-index",1);
+                    oDt.eq(index).removeClass("active");
+                })
+                oLi.eq(iNow).stop(false,true).fadeIn("slow").css("z-index",1);
+                oDt.eq(iNow).addClass("active");
+
+
+            })
+
+
+
+
+        })
+
+    </script>
+    <style>
+
+        *{margin:0;padding:0;}
+        #box{width:704px;height:273px; border:1px solid #000;margin:100px auto;position: relative;
+        }
+        #left,#right{position: absolute;top:0;padding:10px; z-index: 22;}
+        #left{left:-43px;}
+        #right{right: -53px;}
+        #list{width:452px; height:273px; overflow:hidden;position: relative;}
+        li{ list-style:none;width:452px; height:273px;position:absolute;left:0;top:0;z-index: 1;}
+        #dot{ width:250px; height:275px; overflow:hidden;position: absolute;right:0;top:0;}
+        dt{ width:250px; height:67px;border-bottom:1px dotted #ccc;background:green;}
+        .active{background:black  url(bg.png) no-repeat;}
+    </style>
+</head>
+
+<body>
+
+
+<div id="box">
+    <input type="button"  value ="left" id="left">
+    <input type="button"  value ="right" id="right">
+    <ul id="list">
+        <li><img src="http://res.yyets.com/ftp/2014/0804/fdaae5c0cd138722f1be4e7544a87965.jpg"></li>
+        <li><img src="http://res.yyets.com/ftp/2014/0804/19eff111685c15077a2bec183c824fbb.jpg"></li>
+        <li><img src="http://res.yyets.com/ftp/2014/0801/e63a58e685878fcb9328264ef5de1d35.jpg"></li>
+        <li><img src="http://res.yyets.com/ftp/2014/0730/8612db7ab62278b41fe3c7c3c1b60281.jpg"></li>
+    </ul>
+    <dl id="dot">
+        <dt class="active">1</dt>
+        <dt>2</dt>
+        <dt>3</dt>
+        <dt>4</dt>
+    </dl>
+</div>
+
+
+
+
+
+</body>
+</html>

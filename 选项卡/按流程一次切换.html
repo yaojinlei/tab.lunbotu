@@ -1,0 +1,168 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>jQuery Tabs带流程步骤的滑动选项卡</title>
+    <script type="text/javascript" src="封装方法/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var conInnerConWidth = $(".innercon").width();
+            var conSize = $(".innercon").size();
+            var tabHeight = $(".tab a").height();
+            if (!window.cur) window.cur = 0;
+            $(".tab a").click(function () {
+                var index = $(".tab a").index(this);
+                slide(conInnerConWidth, tabHeight, index);
+                return false;
+            });
+            $(".prev").click(function () {
+                if (window.cur > 0) slide(conInnerConWidth, tabHeight, window.cur - 1);
+                return false;
+            });
+            $(".next").click(function () {
+                if (window.cur < conSize - 1) slide(conInnerConWidth, tabHeight, window.cur + 1);
+                return false;
+            });
+            $(".feature_tour .tab, .feature_tour .nav").addClass("vv");
+            function slide(conInnerConWidth, tabHeight, index) {
+                $(".tab a").removeClass("current");
+                $(".tab a").eq(index).addClass("current");
+                $(".tab").css("background-position", "0 -" + index * tabHeight + "px");
+                $(".maskcon").animate({marginLeft: -index * conInnerConWidth + "px"});
+                window.cur = index;
+            }
+        });
+    </script>
+    <style>
+        @charset "utf-8";
+        * {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        a, img {
+            border: 0;
+        }
+
+        body {
+            font-size: 12px;
+            background: url(/jscss/demoimg/201404/middlebg.png) #fff repeat-x;
+            color: #333;
+            font-family: arial, helvetica, sans-serif
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .feature_tour {
+            width: 921px;
+            margin: 20px auto 0 auto;
+        }
+
+        .feature_tour .tab {
+            background: url(/jscss/demoimg/201404/featurestabbg.png) no-repeat;
+            width: 921px;
+            height: 47px;
+            overflow: hidden;
+        }
+
+        .feature_tour .tab a {
+            display: block;
+            font-size: 14px;
+            float: left;
+            width: 20%;
+            color: #999;
+            text-indent: 20px;
+            line-height: 47px;
+            height: 47px;
+            text-shadow: 0px 1px 0px #fff
+        }
+
+        .feature_tour .tab a.current {
+            color: #fff;
+            text-shadow: 0px 1px 0px #788e21
+        }
+
+        .feature_tour .mask {
+            margin: 20px 0px 0px 0px;
+            width: 100%;
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 -2px 3px -2px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.1);
+            border-radius: 6px 6px 6px 6px;
+        }
+
+        .feature_tour .mask .maskcon {
+            width: 5000px
+        }
+
+        .feature_tour .mask .maskcon .innercon {
+            float: left;
+            width: 921px;
+        }
+
+        .feature_tour .nav {
+            margin: 20px 0px 0px 0px;
+        }
+
+        .feature_tour .nav p {
+            margin: 0 auto;
+            width: 90px;
+            height: 36px;
+            overflow: hidden;
+        }
+
+        .feature_tour .nav p a {
+            display: block;
+            float: left;
+            width: 45px;
+            height: 36px;
+            overflow: hidden;
+        }
+
+        .feature_tour .nav p a.prev {
+            background: #55ea55;
+        }
+
+        .feature_tour .nav p a.prev:hover {
+            background-position: 0px -36px
+        }
+
+        .feature_tour .nav p a.next {
+            background:#E91E63;
+        }
+
+        .feature_tour .nav p a.next:hover {
+            background-position: right -72px
+        }
+    </style>
+</head>
+<body>
+<div class="feature_tour">
+    <div class="tab">
+        <a href="#" class="current">网站首页</a>
+        <a href="#">基本信息</a>
+        <a href="#">高级信息</a>
+        <a href="#">帐户信息</a>
+        <a href="#">完成注册</a>
+    </div>
+    <div class="mask">
+        <div class="maskcon">
+            <div id="con1" class="innercon">步骤一</div>
+            <div id="con2" class="innercon">步骤二</div>
+            <div id="con3" class="innercon">步骤三</div>
+            <div id="con4" class="innercon">步骤四</div>
+            <div id="con5" class="innercon">步骤五</div>
+        </div>
+    </div>
+    <div class="nav">
+        <p><a href="#" class="prev">&nbsp;</a><a href="#" class="next">&nbsp;</a></p>
+    </div>
+</div>
+</body>
+</html>

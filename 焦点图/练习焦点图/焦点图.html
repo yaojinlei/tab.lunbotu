@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+        }
+
+        #outer {
+            margin: 200px auto;
+            width: 500px;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #outer #inner {
+            width: 2500px;
+            height: 300px;
+            position: absolute;
+            top: 0;
+            left:0px;
+        }
+
+        #outer #inner div {
+            width: 500px;
+            height: 300px;
+            text-align: center;
+            line-height: 300px;
+            font-weight: bold;
+            /*display: inline-block;*/
+            float: left;
+            font-size: 60px;
+        }
+
+        #outer #inner div:nth-child(odd) {
+            background-color:#DBDBDB;
+            color: #8B0000;
+        }
+
+        #outer #inner div:nth-child(even) {
+            background-color: #BA55D3;
+            color: #ADFF2F;
+        }
+
+        #outer #btn {
+            list-style: none;
+            position: absolute;
+            bottom: 30px;
+            left: 100px;
+        }
+
+        #outer #btn li {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #8A2BE2;
+            margin-left: 20px;
+            display: inline-block;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+
+        }
+
+        #outer #btn li.no {
+            background-color: #FAEBD7;
+        }
+        #left, #right{
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            background: #FAEBD7;
+            font-size: 14px;
+            text-align: center;
+            position: absolute;
+            left: 10px;
+            top: 130px;
+            color: #FA5889;
+            cursor: pointer;
+            display: inline-block;
+            border-radius: 30%;
+            font-weight: bold;
+            display: none;
+
+
+
+        }
+
+        #right{
+            left: 440px;
+        }
+        #outer:hover #left,#outer:hover #right{
+            display: block;
+
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div>yi</div>
+        <div>er</div>
+        <div>san</div>
+        <div>si</div>
+        <div>wu</div>
+    </div>
+    <ul id="btn">
+        <li class="no">yi</li>
+        <li>er</li>
+        <li>san</li>
+        <li>si</li>
+        <li>wu</li>
+    </ul>
+    <div id="left">< </div>
+    <div id="right">> </div>
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+    var o_lis = document.getElementById("btn").getElementsByTagName("li");
+    var o_div = document.getElementById("inner").getElementsByTagName("div")[0];
+    inner.appendChild(o_div.cloneNode(true));
+    inner.style.width=inner.offsetWidth+o_div.offsetWidth+"px";
+    for(var i=0;i<o_lis.length;i++){
+        o_lis[i].n=i;
+        o_lis[i].onclick=function(){
+            window.clearInterval(autoTimer);
+            animate(inner,{left:this.n*(-500)},800);
+            autoTimer=window.setTimeout(function(){
+                autoTimer=setInterval(autoMove,2000);
+            },3000);
+            step = this.n;
+            tips(this.n)
+        }
+    };
+    var step=0;
+    function autoMove(){
+        step++;
+        if(step==6){
+            inner.style.left=0;
+            step=1;
+        }
+        animate(inner,{left:step*-500},600);
+        tips(step)
+
+    }
+     var autoTimer = window.setInterval(autoMove, 2000);
+    function tips(n){
+        for(var i=0;i<o_lis.length;i++){
+            o_lis[i].className="";
+        }
+        if(n==5){
+            n=0;
+        }
+        o_lis[n].className="no"
+    };
+
+
+
+//    var step = 0;
+//    left.onclick = function () {
+//        step--;
+//        if (step < 0) {
+//            inner.style.left = "-2500px";
+//            step = 4;
+//        }
+//        animate(inner, {"left": step * (-500)}, 800);
+//    };
+//
+//    right.onclick = function () {
+//        step++;
+//        if (step == 6) {
+//            inner.style.left = 0;
+//            step = 1;
+//        }
+//        animate(inner, {"left": step * (-500)}, 800);
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function animate(ele, obj, duration, callback) {
+        var oChange = {};
+        var oBegin = {};
+        var times = 0;
+        var interval = 15;
+        var flag = 0;
+        for (var attr in obj) {
+            var target = obj[attr];
+            var begin = animate.getCss(ele, attr);
+            var change = target - begin;
+
+            if (change) {
+                oBegin[attr] = begin;
+                oChange[attr] = change;
+                flag++;
+            }
+        }
+
+        if (flag === 0) {
+            return;
+        }
+
+        clearInterval(ele.timer);
+
+        function step() {
+            times += interval;
+            if (times < duration) {
+                for (var attr in oChange) {
+
+                    var change = oChange[attr];
+                    var begin = oBegin[attr];
+                    var val = times / duration * change + begin;
+                    animate.setCss(ele, attr, val);
+                }
+            } else {
+                for (var attr in oChange) {
+                    animate.setCss(ele, attr, obj[attr]);
+                }
+                clearInterval(ele.timer);
+                ele.timer = null;
+                if (typeof callback == "function") {
+                    callback.call(ele);
+                }
+            }
+        }
+
+        ele.timer = window.setInterval(step, interval);
+    }
+    animate.getCss = function (ele, attr) {
+        if (window.getComputedStyle) {
+            return parseFloat(getComputedStyle(ele, null)[attr]);
+        } else {
+            if (attr == "opacity") {
+                var value = ele.currentStyle.filter;
+                value = value.replace(/ +/g, "");
+                var reg = /alpha\(opacity=(\d+(\.\d+)?)\)/;
+                if (reg.test(value)) {
+                    return RegExp.$1 / 100;
+                } else {
+                    return 1;
+                }
+            }
+            return parseFloat(ele.currentStyle[attr]);
+        }
+    };
+
+    animate.setCss = function (ele, attr, value) {
+        if (attr == "opacity") {
+            ele.style.opacity = value;
+            ele.style.filter = "alpha(opacity=" + value * 100 + ")";
+        } else {
+            ele.style[attr] = value + "px";
+        }
+    }
+
+
+</script>

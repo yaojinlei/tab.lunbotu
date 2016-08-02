@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        ul, li {
+            list-style: none;
+        }
+
+        .tab {
+            width: 650px;
+            margin: 0 auto 50px;
+        }
+
+        .tab-hd {
+            background: #F93;
+            overflow: hidden;
+            zoom: 1;
+        }
+
+        .tab-hd li {
+            float: left;
+            width: 150px;
+            color: #fff;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .tab-hd li.active {
+            background: #F60;
+        }
+
+        .tab-bd li {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: 0 none;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="tab">
+    <ul class="tab-hd">
+        <li>选项4</li>
+        <li>选项5</li>
+        <li>选项6</li>
+    </ul>
+    <ul class="tab-bd">
+        <li>内容4</li>
+        <li>内容5</li>
+        <li>内容6</li>
+    </ul>
+</div>
+<div class="tab">
+    <ul class="tab-hd">
+        <li>选项4</li>
+        <li>选项5</li>
+
+    </ul>
+    <ul class="tab-bd">
+        <li>内容4</li>
+        <li>内容5</li>
+
+    </ul>
+</div>
+
+<div class="tab">
+    <ul class="tab-hd">
+        <li>选项4</li>
+        <li>选项5</li>
+        <li>选项6</li>
+        <li>选项6</li>
+        <li>选项6</li>
+    </ul>
+    <ul class="tab-bd">
+        <li>内容4</li>
+        <li>内容5</li>
+        <li>内容6</li>
+        <li>内容6</li>
+        <li>内容6</li>
+    </ul>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function tabs(tabTit, on, tabCon) {
+            $(tabCon).each(function () {
+                $(this).children().eq(0).show();
+            });
+            $(tabTit).each(function () {
+                $(this).children().eq(0).addClass(on);
+            });
+            $(tabTit).children().click(function () {
+                $(this).addClass(on).siblings().removeClass(on);
+                var index = $(tabTit).children().index(this);
+                $(tabCon).children().eq(index).show().siblings().hide();
+            });
+        }
+
+        tabs(".tab-hd", "active", ".tab-bd");//切卡  选中样式  切卡对应的内容
+    });
+</script>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #outer {
+            height: 300px;
+            width: 500px;
+            margin: 100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #outer #inner {
+            width: 2500px;
+            height: 300px;
+            position: absolute;
+            left: 0;
+            top: 0;
+
+        }
+
+        #outer #inner div {
+            height: 300px;
+            width: 500px;
+            line-height: 300px;
+            text-align: center;
+            font-size: 50px;
+            float: left;
+        }
+
+        #outer #inner div:nth-child(odd) {
+            background-color: #2c9dc4;
+            color: #ADFF2F;
+        }
+
+        #outer #inner div:nth-child(even) {
+            background-color: #BA55D3;
+            color: #8B0000;
+        }
+
+        #btn {
+            position: absolute;
+            left: 120px;
+            bottom: 40px;
+            list-style: none;
+            height: 30px;
+        }
+
+        #btn li {
+            background-color: #FA5889;
+            margin-left: 10px;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        #btn li.one {
+            background-color: #DBDBDB;
+            color: #FFCF78;
+        }
+
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div>yi</div>
+        <div>er</div>
+        <div>san</div>
+        <div>si</div>
+        <div>wu</div>
+    </div>
+    <ul id="btn">
+        <li class="one">i</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</div>
+
+</body>
+</html>
+<script type="text/javascript" charset="UTF-8" src="js/prototype.js"></script>
+<script type="text/javascript">
+    var o_lis = document.getElementById("btn").getElementsByTagName("li");
+    var o_div = document.getElementById("inner").getElementsByTagName("div")[0];
+    inner.appendChild(o_div.cloneNode(true));
+    inner.style.width = inner.offsetWidth + o_div.offsetWidth + "px";
+    for (var i = 0; i < o_lis.length; i++) {
+        o_lis[i].n = i;
+        o_lis[i].onclick = function () {
+            window.clearInterval(autoTimer);
+            animate(inner, {left: this.n * (-500)}, 800);
+            autoTimer = window.setTimeout(function () {
+                autoTimer = setInterval(autoMove, 2000)
+            }, 3000);
+            step = this.n;
+            tips(this.n)
+        }
+    }
+    ;
+    var step = 0;
+    function autoMove() {
+        step++;
+        if (step == 6) {
+            inner.style.left = 0 + "px";
+            step = 1;
+        }
+        animate(inner, {left: step * -500}, 600);
+        tips(step)
+    }
+    var autoTimer = window.setInterval(autoMove, 2000);
+    function tips(n) {
+        for (var i = 0; i < o_lis.length; i++) {
+            o_lis[i].className = "";
+        }
+        if (n == 5) {
+            n = 0
+        }
+        o_lis[n].className = "one"
+    }
+    ;
+
+
+
+</script>

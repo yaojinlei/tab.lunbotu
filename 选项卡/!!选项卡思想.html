@@ -1,0 +1,488 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title> New Document </title>
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <link rel="stylesheet" href=""/>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <style type="text/css">
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        body {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #slide {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 50px auto 0;
+        }
+
+        #slide h3 {
+            float: left;
+            display: inline;
+            width: 100px;
+            height: 30px;
+            text-align: center;
+            font: normal 16px/30px "microsoft YaHei";
+            background: #646462;
+            color: #f9f9f9;
+            cursor: pointer;
+        }
+
+        #slide .div {
+            position: absolute;
+            top: 30px;
+            left: 0px;
+            width: 400px;
+            height: 300px;
+            background: #c0c0c0;
+            display: none;
+        }
+
+        #slide .sele {
+            background: #000;
+            color: #FFF;
+        }
+
+        #slide .show {
+            display: block;
+        }
+
+        #slide1 {
+            position: relative;
+            width: 400px;
+            height: 30px;
+            margin: 0px auto;
+        }
+
+        #slide1 h3 {
+            float: left;
+            display: inline;
+            width: 100px;
+            height: 30px;
+            text-align: center;
+            font: normal 16px/30px "microsoft YaHei";
+            background: #646462;
+            color: #f9f9f9;
+            cursor: pointer;
+        }
+
+        #slide1 .sele {
+            background: #000;
+            color: #FFF;
+        }
+
+        #slide2 {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+        }
+
+        #slide2 div {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 400px;
+            height: 300px;
+            background: #c0c0c0;
+            display: none;
+        }
+
+        #slide2 .show {
+            display: block;
+        }
+
+        #slide3 {
+            position: relative;
+            width: 259px;
+            height: 194px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #slide3 div {
+            position: absolute;
+            width: 259px;
+            height: 194px;
+        }
+
+        #slide3 img {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 0;
+            opacity: 0.2;
+        }
+
+        #slide3 .img_1 {
+            z-index: 2;
+            opacity: 1;
+        }
+
+        #slide3 .title {
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            display: block;
+            width: 259px;
+            height: 40px;
+            background: #000;
+            opacity: 0.4;
+            color: #FFF;
+            line-height: 20px;
+            font-size: 12px;
+            z-index: 2;
+        }
+
+        #slide3 .btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 3;
+            width: 80px;
+            height: 15px;
+        }
+
+        #slide3 .btn span {
+            float: left;
+            display: inline;
+            width: 15px;
+            height: 15px;
+            background: #FFF;
+            color: #000;
+            margin-left: 5px;
+            text-align: center;
+            line-height: 15px;
+            font-size: 12px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #slide3 .btn .sele {
+            background: #1C6481;
+            color: #FFF;
+            text-decoration: none;
+        }
+
+        #slide5 {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 50px auto 0;
+        }
+
+        #slide5 h3 {
+            float: left;
+            display: inline;
+            width: 100px;
+            height: 30px;
+            text-align: center;
+            font: normal 16px/30px "microsoft YaHei";
+            background: #646462;
+            color: #f9f9f9;
+            cursor: pointer;
+        }
+
+        #slide5 .div {
+            position: absolute;
+            top: 30px;
+            left: 0px;
+            width: 400px;
+            height: 300px;
+            background: #c0c0c0;
+            display: none;
+        }
+
+        #slide5 .sele {
+            background: #000;
+            color: #FFF;
+        }
+
+        #slide5 .show {
+            display: block;
+        }
+
+        img {
+            opacity: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        .box {
+            margin: 10px auto;
+            width: 500px;
+        }
+
+        .box ul {
+            position: relative;
+            top: 1px;
+            /*overflow: hidden;*//*清除子元素的浮动对父级元素的影响*/
+        }
+
+        .box ul:after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+
+        .box ul li {
+            float: left;
+            margin-right: 15px;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid green;
+            cursor: pointer;
+
+        }
+
+        .box ul li.select, .select1, .select2 {
+            background: lightblue;
+            border-bottom-color: lightblue;
+        }
+
+        .box div {
+            display: block;
+            height: 150px;
+            line-height: 150px;
+            text-align: center;
+            background: lightblue;
+            border: 1px solid green;
+            /*clear: both;*//*清除哥哥元素的浮动对弟弟元素的影响*/
+        }
+
+        .box div.select, .box .select1, .box .select2 {
+            display: block;
+        }
+
+        .box .wrap {
+            height: 152px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<div id="slide">
+    <h3 class="">标题1</h3>
+
+    <div class="div ">内容1</div>
+    <h3 class="">标题2</h3>
+
+    <div class="div ">内容2</div>
+    <h3 class="sele">标题3</h3>
+
+    <div class="div show">内容3</div>
+    <h3 class="">标题4</h3>
+
+    <div class="div ">内容4</div>
+</div>
+<div id="hallo">
+    <div id="slide1">
+        <h3>标题1</h3>
+
+        <h3 class="sele">标题2</h3>
+    </div>
+    <div id="slide2">
+        <div>内容1</div>
+        <div class="show">内容2</div>
+    </div>
+</div>
+<div id="slide5">
+    <section>
+        <h3 class="">标题1</h3>
+
+        <div class="div ">内容1</div>
+    </section>
+    <section>
+        <h3 class="sele">标题2</h3>
+
+        <div class="div show">内容2</div>
+    </section>
+</div>
+<div class="box" id="tabFir">
+    <div>
+        <li class="select">页卡一</li>
+        <div class="select">内容一</div>
+
+
+    </div>
+    <div class="wrap">
+
+        <li>页卡二</li>
+        <div>内容二</div>
+
+    </div>
+    <div>
+        <li>页卡三</li>
+        <div>内容三</div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#slide").tabChange();
+        $("#hallo").tabChange();
+        $("#slide5").tabChange();
+        $("#tabFir").tabChange();
+    });
+</script>
+</body>
+</html>
+
+<script type="text/javascript">
+    /*
+     @name:选项卡切换
+     @ev:事件
+     @auto:是否自动播放
+     @delayer:播放间隔时间
+     @author:他们叫我GOD
+     @time:2014-4-26
+     */
+    $.fn.tabChange = function (config, callback) {
+        if ($.isFunction(config)) {
+            callback = config;
+            config = {};
+        }
+
+        var config = $.extend({
+            'ev': 'click',
+            'auto': true,
+            'amg': false,
+            'config': {},
+            'delayer': 3000
+        }, config);
+
+        return this.each(function (index, ele) {
+            var $ele = $(ele);
+
+            var titles = [],
+                    contents = [];
+            //add = 0;
+            jQuery.data(ele, "length", $ele.children().length); //获取元素长度
+            jQuery.data(ele, "firstChild", $ele.children().eq(0)); //获取对象元素第一个子集元素
+            jQuery.data(ele, "length1", jQuery.data(ele, 'firstChild').children().length);//获取特殊结构长度
+            jQuery.data(ele, "old", 0);
+            jQuery.data(ele, 'current', 0);
+            //current = 0;
+            if ($ele.data("length") < 2) {
+                return;
+            }
+            else if ($ele.data("firstChild").get(0).tagName.toLowerCase() == "section") {
+                //结构如下
+                /*<div>
+                 <section>
+                 <h2></h2>
+                 <div></div>
+                 <section>
+                 <section>
+                 <h2></h2>
+                 <div></div>
+                 <section>
+                 </div>*/
+                for (var i = 0; i < $ele.data("length"); i++) {
+                    titles[i] = $ele.children().eq(i).children().eq(0);
+                    contents[i] = $ele.children().eq(i).children().eq(1);
+                }
+            }
+            else if ($ele.data("length") === 2) {
+                //结构如下
+                /*<div>
+                 <div>
+                 <h2></h2>
+                 <h2></h2>
+                 <div>
+                 <div>
+                 <div></div>
+                 <div></div>
+                 <div>
+                 </div>*/
+                for (var i = 0; i < $ele.data("length1"); i++) {
+                    titles[i] = $ele.children().eq(0).children().eq(i);
+                    contents[i] = $ele.children().eq(1).children().eq(i);
+                }
+            }
+            else {
+                //结构如下
+                /*<div>
+                 <h2></h2>
+                 <div></div>
+                 <h2></h2>
+                 <div></div>
+                 </div>*/
+                for (var i = 0, j = 0; i < $ele.data("length"); i += 2) {
+                    titles[j] = $ele.children().eq(i);
+                    contents[j++] = $ele.children().eq(i + 1);
+                }
+            }
+            //console.log(titles.length);
+            if (config.auto) {
+                $ele.on({
+                    'mouseover': function () {
+                        clearInterval($ele.data('interval'));
+                    },
+                    'mouseout': function () {
+                        autoPlay();
+                    }
+                });
+                autoPlay();
+            }
+            function autoPlay() {
+                jQuery.data(ele, 'interval', setInterval(function () {
+                    $ele.data('current', $ele.data('current') + 1);
+                    if ($ele.data('current') > titles.length - 1) {
+                        $ele.data('current', 0);
+                        $ele.data('old', titles.length - 1);
+                    }
+                    if ($ele.data('current') == 1) {
+                        $ele.data('old', 0);
+                    }
+                    titles[$ele.data("old")].removeClass("sele");
+                    contents[$ele.data("old")].removeClass("show");
+                    titles[$ele.data("current")].addClass("sele");
+                    contents[$ele.data("current")].addClass("show");
+                    $ele.data('old', $ele.data('old') + 1);
+                }, config.delayer));
+            }
+
+            $.each(titles, function (index) {
+                if ($(this).hasClass("sele")) {
+                    $ele.data("old", index);
+                    $ele.data('current', index);
+                }
+                $(this).on(config.ev, function () {
+                    if ($.isFunction(callback)) {
+                        callback(jQuery.data(ele, "old"), index);
+                    }
+                    if ($ele.data('current') == 0) {
+                        $ele.data('old', 0);
+                    }
+                    titles[$ele.data("old")].removeClass("sele");
+                    contents[$ele.data("old")].removeClass("show");
+                    $(this).addClass("sele");
+                    contents[index].addClass("show");
+                    $ele.data("old", index);
+                    $ele.data('current', index);
+                });
+            });
+            if (config.amg) {
+                $.each(contents, function (index) {
+                    $(this).AMG(config.config);
+                });
+            }
+        });
+    };
+
+
+</script>

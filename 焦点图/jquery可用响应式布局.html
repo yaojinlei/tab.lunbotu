@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>焦点轮播图</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    #banner {
+        width: 1024px;
+        height: 291px;
+        position: relative;
+    }
+
+    #banner > ul > li {
+        background-position: center;
+        height: 291px;
+        position: absolute;
+        left: 0;
+        top: 0px;
+        width: 1024px;
+        opacity: 0;
+        color: red;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    #banner > ol {
+        position: absolute;
+        bottom: 10px;
+        left: 49%;
+        z-index: 1;
+    }
+
+    #banner > ol > li {
+        cursor: pointer;
+        opacity: .3;
+        float: left;
+        border-radius: 12px;
+        margin-right: 10px;
+        width: 12px;
+        height: 12px;
+        background: #fff;
+
+
+
+
+    }
+
+    #banner > ol > li.foucs {
+        opacity: 1;
+    }
+
+    #banner .prev {
+        display: block;
+        text-align: center;
+        position: absolute;
+        left: 2%;
+        top: 43%;
+        font: 56px "黑体";
+        color: #fff;
+        opacity: .3;
+    }
+
+    #banner .next {
+        display: block;
+        text-align: center;
+        position: absolute;
+        right: 2%;
+        top: 43%;
+        font: 56px "黑体";
+        color: #fff;
+        opacity: .3;
+    }
+
+    #banner > a:hover {
+        opacity: 1;
+    }
+</style>
+<div id="banner">
+    <ul>
+        <li style="background: url(http://pic2.ooopic.com/12/19/16/29bOOOPICef_1024.jpg) no-repeat;">1</li>
+        <li style="background: url(http://pic2.ooopic.com/13/63/21/60bOOOPICf3_1024.jpg) no-repeat;">2</li>
+        <li style="background: url(http://pic2.ooopic.com/12/90/09/31bOOOPICa8_1024.jpg) no-repeat;">3</li>
+        <li style="background: url(http://pic2.ooopic.com/12/19/16/29bOOOPICef_1024.jpg) no-repeat;">4</li>
+        <li style="background: url(http://pic2.ooopic.com/13/63/21/60bOOOPICf3_1024.jpg) no-repeat;">5</li>
+        <li style="background: url(http://pic2.ooopic.com/12/90/09/31bOOOPICa8_1024.jpg) no-repeat;">6</li>
+
+    </ul>
+</div>
+<script>
+    $(function () {
+        var li = $('#banner ul li')
+        var i = 0;
+        var time
+        //定义执行的样式
+        function anim() {
+            li.eq(i).stop().animate({opacity: '1'}, 1000).siblings().animate({opacity: '0'}, 1000);
+            $('#banner>ol>li').eq(i).addClass('foucs').siblings().removeClass('foucs');
+        }
+
+        window.onload = function () {
+            anim()
+            time = setInterval(autoPlay, 3000);//设置计时器赋予变量time
+            //自动生成圆点按钮
+            var ol = $('#banner').append('<ol></ol>');
+            //遍历添加li元素
+            for (var x = 0; x < li.length; x++) {
+                if (x == 0) {
+                    $('#banner>ol').append('<li class="foucs"></li>')
+                } else {
+                    $('#banner>ol').append('<li></li>')
+                }
+            }
+            //给予圆点点击事件，点击显示
+            $('#banner>ol>li').click(function () {
+                i = $(this).index();
+                anim()
+            })
+
+        }
+        //自动播放
+        function autoPlay() {
+            if (i < li.length) {
+                i++
+                anim()
+
+            } else {
+                i = 0;
+                anim()
+            }
+        }
+
+        //鼠标经过停止播放
+        $('#banner').mouseover(function () {
+            clearInterval(time)
+        })
+        //鼠标离开自动播放
+        $('#banner').mouseout(function () {
+            time = setInterval(autoPlay, 2000);//设置计时器赋予变量time
+        })
+        //增加左右按钮
+        $('#banner').append('<a href="javascript:;" class="prev"><</a>')
+        $('#banner').append('<a href="javascript:;" class="next">></a>')
+        //左按钮事件
+        $('#banner .prev').click(function () {
+            if (i < 1) {
+                i = li.length;
+                anim()
+            } else {
+                i--
+                anim();
+            }
+        })
+        //右按钮事件
+        $('#banner .next').click(function () {
+            if (i < li.length) {
+                i++
+                anim()
+            } else {
+                i = 0
+                anim()
+            }
+        })
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>RunJS</title>
+    <style type="text/css">
+        .tab {
+        }
+
+        .tab h2 {
+            width: 100%;
+        }
+
+        .tab h2 a {
+            float: left;
+            display: inline-block;
+            width: 24%;
+            margin-right: 1%;
+            background: orange;
+            color: #fff;
+            font-size: 12px;
+            text-align: center;
+            line-height: 25px;
+        }
+
+        .tab h2 .on {
+            background: blue;
+        }
+
+        .tab .tab-content {
+        }
+
+        .tab .tab-content p {
+            float: left;
+            width: 100%;
+        }
+
+        .tab .tab-content .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="tab" id="tab">
+    <h2>
+        <a href="javascript:;" class="on">第一个</a>
+        <a href="javascript:;">第二个</a>
+        <a href="javascript:;">第三个</a>
+        <a href="javascript:;">第四个</a>
+    </h2>
+
+    <div class="tab-content" id="tab-content">
+        <p>
+            第一段
+        </p>
+
+        <p class="hide">
+            第二段
+        </p>
+
+        <p class="hide">
+            第三段
+        </p>
+
+        <p class="hide">
+            第四段
+        </p>
+    </div>
+</div>
+
+
+</body>
+</html>
+<script type="text/javascript">
+    function tabs(id, tabcontent, trigger) {
+        var tabHead = document.getElementById(id).getElementsByTagName('h2')[0].getElementsByTagName('a');
+        var tabContent = document.getElementById(tabcontent).getElementsByTagName('p');
+        var len = tabHead.length;
+        for (var i = 0; i < len; i++) {
+            tabHead[i].index = i;
+            if (trigger == 'click') {
+                tabHead[i].onclick = function () {
+                    clearClass();
+                    this.className = 'on';
+                    contentShow(this.index);
+                }
+            }
+            if (trigger == 'mouseover') {
+                tabHead[i].onmouseover = function () {
+                    clearClass();
+                    this.className = 'on';
+                    contentShow(this.index);
+                }
+            }
+        }
+
+        function clearClass() {
+            for (var i = 0, len = tabHead.length; i < len; i++) {
+                tabHead[i].className = '';
+            }
+        }
+
+        function contentShow(n) {
+            for (var i = 0, len = tabHead.length; i < len; i++) {
+                tabContent[i].className = 'hide';
+            }
+            tabContent[n].className = 'tab-content';
+        }
+    }
+    tabs('tab', 'tab-content', 'mouseover')
+</script>

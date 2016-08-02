@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
+    <title>代码简洁的滑动门（tab）jquery插件 - 懒人建站</title>
+    <meta name="keywords" content="jquery特效,JS代码,js特效代码大全,导航菜单代码,焦点幻灯片,企业网页设计欣赏"/>
+    <meta name="description" content="懒人建站为您提供-基于jquery特效，jquery弹出层效果，js特效代码大全，JS广告代码，导航菜单代码，下拉菜单代码和jquery焦点图片代码。"/>
+
+    <style type="text/css">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+            font: 12px normal "宋体", Arial, Helvetica, sans-serif;
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+            font-size: 14px;
+        }
+
+        #tabbox {
+            width: 800px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .tab_conbox {
+            border: 1px solid #999;
+            border-top: none;
+        }
+
+        .tab_con {
+            display: none;
+        }
+
+        .tabs {
+            height: 32px;
+            border-bottom: 1px solid #999;
+            border-left: 1px solid #999;
+            width: 100%;
+        }
+
+        .tabs li {
+            height: 31px;
+            line-height: 31px;
+            float: left;
+            border: 1px solid #999;
+            border-left: none;
+            margin-bottom: -1px;
+            background: #e0e0e0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tabs li a {
+            display: block;
+            padding: 0 20px;
+            border: 1px solid #fff;
+            outline: none;
+        }
+
+        .tabs li a:hover {
+            background: #ccc;
+        }
+
+        .tabs .thistab, .tabs .thistab a:hover {
+            background: #fff;
+            border-bottom: 1px solid #fff;
+        }
+
+        .tab_con {
+            padding: 12px;
+            font-size: 14px;
+            line-height: 175%;
+        }
+    </style>
+    <script src="http://lib.sinaapp.com/js/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            jQuery.jqtab = function (tabtit, tabcon) {
+                $(tabcon).hide();
+                $(tabtit + " li:first").addClass("thistab").show();
+                $(tabcon + ":first").show();
+
+                $(tabtit + " li").click(function () {
+                    $(tabtit + " li").removeClass("thistab");
+                    $(this).addClass("thistab");
+                    $(tabcon).hide();
+                    var activeTab = $(this).find("a").attr("tab");
+                    $("#" + activeTab).fadeIn();
+                    return false;
+                });
+
+            };
+            /*调用方法如下：*/
+            $.jqtab("#tabs", ".tab_con");
+
+        });
+    </script>
+</head>
+<body>
+<div id="tabbox">
+
+    <ul class="tabs" id="tabs">
+        <li><a href="http://www.51xuediannao.com/js/nav/" tab="tab1">导航菜单</a></li>
+        <li><a href="http://www.51xuediannao.com/js/slide/" tab="tab2">焦点幻灯片</a></li>
+        <li><a href="http://www.51xuediannao.com/js/gg/" tab="tab3">广告代码</a></li>
+        <li><a href="http://www.51xuediannao.com/js/texiao/" tab="tab4">网页特效</a></li>
+        <li><a href="http://www.51xuediannao.com/js/texiao/" tab="tab5">网页特效</a></li>
+        <li><a href="http://www.51xuediannao.com/js/texiao/" tab="tab6">网页特效</a></li>
+    </ul>
+    <ul class="tab_conbox">
+        <li id="tab1" class="tab_con">
+            <p><span><a href="http://www.51xuediannao.com/">懒人建站</a>只收录实用和能提高用户体验的代码</span><br/>
+                <span>我们只想解放出你的部分写代码时间来思考更高层次的设计，而不是要你懒惰、拼凑。</span></p>
+        </li>
+
+        <li id="tab2" class="tab_con">
+            <p><span><a href="http://www.51xuediannao.com/">懒人建站</a>只收录实用和能提高用户体验的代码</span><br/>
+                <span>我们只想解放出你的部分写代码时间来思考更高层次的设计，而不是要你懒惰、拼凑。</span></p>
+        </li>
+
+        <li id="tab3" class="tab_con">
+            <p><span><a href="http://www.51xuediannao.com/">懒人建站</a>只收录实用和能提高用户体验的代码</span><br/>
+                <span>我们只想解放出你的部分写代码时间来思考更高层次的设计，而不是要你懒惰、拼凑。</span></p>
+        </li>
+
+        <li id="tab4" class="tab_con">
+            <p><span><a href="http://www.51xuediannao.com/">懒人建站</a>只收录实用和能提高用户体验的代码</span><br/>
+                <span>我们只想解放出你的部分写代码时间来思考更高层次的设计，而不是要你懒惰、拼凑。</span></p>
+        </li>
+        <li id="tab5" class="tab_con">
+            <p><span><a href="http://www.51xuediannao.com/">懒人建站</a>只收录实用和能提高用户体验的代码</span><br/>
+                <span>我们只想解放出你的部分写代码时间来思考更高层次的设计，而不是要你懒惰、拼凑。</span></p>
+
+        <li id="tab6" class="tab_con">
+            <p><span><a href="http://www.51xuediannao.com/">懒人建站</a>只收录实用和能提高用户体验的代码</span><br/>
+                <span>我们只想解放出你的部分写代码时间来思考更高层次的设计，而不是要你懒惰、拼凑。</span></p>
+        </li>
+    </ul>
+
+</div>
+<p>代码简洁的滑动门（tab）jquery插件调用方法："#tabs",".tab_con"
+    这里的#tabs是jquery选项卡的链接按钮的外层ID，.tab_con是要显示的的内容类名。只要注意这两个地方调用就不会错。一个页面可以多次使用。
+</p>
+
+<!--&lt;!&ndash;下面只是说明与程序代码无关&ndash;&gt;-->
+<!--<div style="width:95%; height:auto; display:block; margin:0 auto; margin-top:30px; font-size:10pt; line-height:150%;">-->
+    <!--<span>本代码由<a href="http://www.51xuediannao.com" style="color:#F00;">懒人建站网 收集整理 我要学电脑.COM-->
+        <!--→51xuediannao.com</a> </span><br>-->
+    <!--<a href="http://www.51xuediannao.com/">懒人建站 http://www.51xuediannao.com/</a><br/><br/>-->
+
+<!--<span> 、我们为您提供- -->
+<!--<a href="http://www.51xuediannao.com/html+css/">html+css</a>，-->
+<!--<a href="http://www.51xuediannao.com/js/">jquery特效</a>，-->
+<!--<a href="http://www.51xuediannao.com/js/">JS代码</a>，-->
+<!--<a href="http://www.51xuediannao.com/js/texiao/">网页特效</a>，-->
+<!--<a href="http://www.51xuediannao.com/js/nav/">导航菜单</a>，-->
+<!--<a href="http://www.51xuediannao.com/js/slide/">焦点幻灯片</a>，-->
+<!--</span> <br/>-->
+    <!--<span>懒人建站只收录实用和能提高用户体验的代码</span><br/>-->
+    <!--<span>我们只想解放出你的部分写代码时间来思考更高层次的设计，而不是要你懒惰、拼凑。</span>-->
+<!--</div>-->
+</body>
+</html>

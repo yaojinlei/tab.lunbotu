@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片淡入淡出切换效果</title>
+    <link rel="icon" href="http://mbyhw.sinaapp.com/common/ico/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="http://mbyhw.sinaapp.com/common/ico/favicon.ico" type="image/x-icon"/>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        .kv {
+            height: 240px;
+            width: 360px;
+            overflow: hidden;
+            position: relative;
+            margin: 10px;
+            display: inline;
+            float: left;
+        }
+
+        .item li {
+            height: 240px;
+            width: 360px;
+            display: none;
+            position: absolute;
+        }
+
+        .item li img {
+            height: 100%;
+            width: 100%;
+        }
+
+        .tab {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            text-align: center;
+            height: 21px;
+            width: 100%;
+        }
+
+        .tab li {
+            display: inline-block;
+            *display: inline;
+            zoom: 1;
+            width: 21px;
+            height: 21px;
+            background: #00ffea;
+            cursor: pointer;
+            margin-right: 8px;
+            overflow: hidden;
+        }
+
+        .tab li.cur {
+            background:#ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="kv">
+    <ul class="item">
+        <li><img src="../../image/1.jpg" alt=""></li>
+        <li><img src="../../image/2.jpg" alt=""></li>
+        <li><img src="../../image/3.jpg" alt=""></li>
+        <li><img src="../../image/4.jpg" alt=""></li>
+    </ul>
+    <ul class="tab">
+        <li>11111</li>
+        <li>22</li>
+        <li>33</li>
+        <li>44</li>
+    </ul>
+</div>
+<div class="kv">
+    <ul class="item">
+        <li><img src="../../image/1.jpg" alt=""></li>
+        <li><img src="../../image/2.jpg" alt=""></li>
+        <li><img src="../../image/3.jpg" alt=""></li>
+        <li><img src="../../image/4.jpg" alt=""></li>
+    </ul>
+    <ul class="tab">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+
+<script type="text/javascript" src="../../js/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+    (function ($) {
+
+        // 创建构造函数;
+        $.fadePic = function (options, wrap) {
+
+            $.extend(this, {
+                panels: "",                 // 切换的panel;
+                tabs: "",					// 切换的tab;
+                eventType: "mouseenter",	// 切换事件类型;
+                currentClass: "cur",        // tab高亮的类名;
+                auto: true,					// 是否自动切换;
+                interval: 4000,				// 自动切换时间间隔;
+                change: function () {
+                },		// 切换后的回调,参数为当前切换元素的索引;
+                index: 0                    // 初始化切换的起始位置;
+            }, options || {});
+
+            var ts = this;
+
+            var wrap = wrap || document; //包裹容器;
+            ts.$panels = $(ts.panels, wrap),
+                    ts.$tabs = $(ts.tabs, wrap);
+
+            if (!ts.$panels.length) return;
+            // 初始化实例;
+            ts.init();
+
+        }
+
+        // 扩展$.fadePic对象原型方法;
+        $.extend($.fadePic.prototype, {
+
+            constructor: $.fadePic,
+
+            init: function () {
+
+                var ts = this;
+
+                this.loop = true;
+                ts.event();
+                var index = ts.$panels.length <= index ? 0 : ts.index;
+                ts.goPlay(index);
+
+                ts.auto && ts.autoPlay();
+
+            },
+            // 切换;
+            goPlay: function (index) {
+
+                var ts = this,
+                        cClass = ts.currentClass;
+
+                ts.$panels.stop(true, true).eq(index).fadeIn(500, function () {
+                    // 切换完成后的回调;
+
+                    $(this).trigger("change", index);
+
+                }).siblings().fadeOut(500);
+
+                ts.$tabs.eq(index).addClass(cClass).siblings().removeClass(cClass);
+
+            },
+            // 绑定事件;
+            event: function () {
+
+                var ts = this,
+                        evt = ts.eventType; // 切换事件类型;
+
+                // 切换事件;
+                ts.$tabs.on(evt, function () {
+
+                    ts.index = ts.$tabs.index(this);
+                    ts.goPlay(ts.index);
+
+                });
+
+                // 切换后触发change自定义事件;
+                ts.$panels.on("change", function (e, index) {
+                    ts.change(index);
+                    // 鼠标移入(移出),停止(继续)切换;
+                }).on("mouseenter", function () {
+                    ts.timerId && clearInterval(ts.timerId);
+                }).on("mouseleave", function () {
+                    ts.auto && ts.autoPlay();
+                });
+
+            },
+            // 自动切换;
+            autoPlay: function () {
+
+                var ts = this,
+                        len = ts.$panels.length;
+
+                ts.timerId = setInterval(function () {
+
+                    ts.index = ( len === ts.index + 1 ) ? 0 : ts.index + 1;
+                    ts.goPlay(ts.index);
+
+                }, ts.interval);
+
+            }
+
+        });
+
+        // 实例化$.fadePic对象;
+        $.fn.fade = function (options) {
+            return this.each(function (i, elem) {
+                new $.fadePic(options, elem);
+            });
+        }
+
+    })(jQuery);
+
+</script>
+<script type="text/javascript">
+    $(".kv").fade({
+        panels: ".item li",
+        tabs: ".tab li",
+        eventType: "click",
+        currentClass: "cur",
+        change: function (i) {
+            //console.log( i );
+        },
+        interval: 2000,
+        auto: true
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tab选项卡(自动切换)</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            height: 100%;
+        }
+
+        body {
+            position: relative;
+            height: 100%;
+            background: #fff;
+        }
+
+        #tab {
+            width: 720px;
+            margin: 50px auto;
+        }
+
+        .tabNav {
+            overflow: hidden;
+        }
+
+        .tabNav span {
+            float: left;
+            height: 70px;
+            text-align: center;
+        }
+
+        .tabNav span em {
+            font-style: normal;
+            display: block;
+            height: 65px;
+            line-height: 70px;
+            font-size: 24px;
+            color: #999;
+            border-width: 4px 1px 1px;
+            border-style: solid;
+            border-color: #d8d8d8;
+            background-color: #f5f5f5;
+            margin-left: -1px;
+        }
+
+        .tabNav span.current em {
+            background-color: #e1e1e1;
+            border-top-color: #a1a1a1
+        }
+
+        .tabContent .dc {
+            border-width: 0 1px 1px;
+            border-style: solid;
+            border-color: #d8d8d8;
+            display: none;
+            padding: 20px
+        }
+
+        .tabContent div.current {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="tab">
+    <div class="tabNav">
+        <span class="current"><em>标题1</em></span>
+        <span><em>标题2</em></span>
+        <span><em>标题3</em></span>
+        <span><em>标题4</em></span>
+        <span><em>标题5</em></span>
+        <span><em>标题6</em></span>
+        <span><em>标题7</em></span>
+        <span><em>标题8</em></span>
+    </div>
+    <div class="tabContent">
+        <div class="dc" style="display:block">内容1</div>
+        <div class="dc">内容2</div>
+        <div class="dc">内容3</div>
+        <div class="dc">内容4</div>
+        <div class="dc">内容5</div>
+        <div class="dc">内容6</div>
+        <div class="dc">内容7</div>
+        <div class="dc">内容8</div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var tab = function (obj, c) {
+        this.init(obj, c);
+    }
+    tab.prototype = {
+        init: function (obj, c) {
+            var self = this;
+            if (self.getId(obj) == null) return;
+            this.wrap = self.getId(obj),
+                    this.con = self.getClass(obj, 'dc'),
+                    this.span = self.getClass(obj, 'tabNav')[0].getElementsByTagName('span'),
+                    this.com = c,
+                    this.myIndex = 0,
+                    this.m = '',
+                    this.len = this.span.length;
+            this.render();
+            if (this.com.play == true) {
+                this.timer();
+            }
+            ;
+
+        },
+        timer: function () {
+            this.time = null, self = this, t = this.com.speend || 3000;
+            clearInterval(self.time)
+            this.time = setInterval(function () {
+                self.myIndex++
+                if (self.myIndex == self.len) self.myIndex = 0;
+                self.show(self.myIndex)
+            }, t);
+
+        },
+        render: function () {
+            var w = this.wrap.offsetWidth, self = this;
+            for (var i = 0; i < this.span.length; i++) {
+                this.span[i].style.width = parseInt(w / this.len) + 'px';
+                this.span[i].index = i;
+                this.span[i].onmouseover = function () {
+                    clearInterval(self.time);
+                    //console.log(this.index)
+                    for (var k = 0; k < self.len; k++) {
+                        self.span[k].className = '';
+                        self.con[k].style.display = "none";
+                    }
+                    ;
+                    self.span[this.index].className = 'current';
+                    self.con[this.index].style.display = "block";
+                    self.myIndex = this.index;
+                }
+
+                this.span[i].onmouseout = function () {
+                    if (self.com.play == true) {
+                        self.timer()
+                    }
+                    ;
+                }
+            }
+            ;
+        },
+        show: function (n) {
+            for (var i = 0; i < this.len; i++) {
+                this.span[i].className = '';
+                this.con[i].style.display = "none";
+            }
+            ;
+            this.span[n].className = 'current';
+            this.con[n].style.display = "block";
+        },
+        getClass: function (obj, className) {
+            var a = this.getId(obj), b = a.getElementsByTagName('*'), c = [];
+            for (var i = 0; i < b.length; i++) {
+                if (b[i].className == className) {
+                    c.push(b[i])
+                }
+            }
+            ;
+            return c;
+        },
+        getId: function (obj) {
+            if (document.getElementById(obj) == null) return;
+            return document.getElementById(obj)
+        }
+    }
+    new tab('tab', {speend: 2500, play: false})
+</script>
+</body>
+</html>
